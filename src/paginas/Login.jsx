@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   return (
@@ -14,10 +14,7 @@ const Login = () => {
         <form>
           <div className="my-5">
             <label
-              className="uppercase text-gray-600 block text-xl font-bold"
-            >
-              Email
-            </label>
+              className="uppercase text-gray-600 block text-xl font-bold">Email</label>
             <input 
               type="email"
               placeholder="Email de Registro"
@@ -26,11 +23,7 @@ const Login = () => {
           </div>
 
           <div className="my-5">
-            <label
-              className="uppercase text-gray-600 block text-xl font-bold"
-            >
-              Password
-            </label>
+            <label className="uppercase text-gray-600 block text-xl font-bold">Password</label>
             <input 
               type="password"
               placeholder="Tu Password"
@@ -44,6 +37,17 @@ const Login = () => {
             className="bg-indigo-700 w-full py-3 px-10 rounded-xl text-white uppercase font-bold mt-4 hover:cursor-pointer hover:bg-indigo-800 md:w-auto "
           />          
         </form>
+
+        <nav className="mt-10 lg:flex lg:justify-between">
+          <Link 
+            className="block text-center my-5 text-gray-500"
+            to="/registrar">¿No tienes una cuenta? Regístrate
+          </Link>
+          <Link 
+            className="block text-center my-5 text-gray-500"
+            to="/olvide-password">Olvide mi Password
+          </Link>
+        </nav>
       </div>
     </>
   )
