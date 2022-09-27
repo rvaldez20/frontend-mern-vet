@@ -5,12 +5,12 @@ const Login = () => {
     <>      
       <div>
         <h1 className="text-indigo-600 font-black text-6xl">
-          Inicia Sesión y Administra tus 
-          <span className="text-black"> Pacientes</span> 
+          Inicia Sesión y Administra tus {""}  
+          <span className="text-black">Pacientes</span> 
         </h1>
       </div>
 
-      <div>
+      <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 roudend-xl bg-white">
         <form>
           <div className="my-5">
             <label
@@ -38,7 +38,7 @@ const Login = () => {
           />          
         </form>
 
-        <nav className="mt-10 lg:flex lg:justify-between">
+        <nav className="mt-5 lg:flex lg:justify-between">
           <Link 
             className="block text-center my-5 text-gray-500"
             to="/registrar">¿No tienes una cuenta? Regístrate
