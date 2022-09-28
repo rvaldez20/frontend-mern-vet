@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import clienteAxios from '../config/axios';
 
 import Alerta from '../components/Alerta';
 
@@ -40,8 +40,8 @@ const Registrar = () => {
     try {
 
       // hacemos la peticion al backend
-      const url = `${import.meta.env.VITE_BACKEND_URL}/api/veterinarios/registro`
-      await axios.post(url, { nombre, email, password })
+      const url = `/veterinarios/registro`
+      await clienteAxios.post(url, { nombre, email, password })
       
       setAlerta({
         msg: 'Creado Correctamente, revisa tu email',

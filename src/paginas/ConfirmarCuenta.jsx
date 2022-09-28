@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import axios from 'axios';
+import clienteAxios from '../config/axios';
 
 import Alerta from '../components/Alerta';
 
@@ -19,8 +19,8 @@ const ConfirmarCuenta = () => {
     const confirmarCuenta = async () => {
       try {
         // url y se hace la petieción get para confirmar la cuenta
-        const url =`${import.meta.env.VITE_BACKEND_URL}/api/veterinarios/confirmar/${token}`;
-        const { data } = await axios.get(url);
+        const url =`/veterinarios/confirmar/${token}`;
+        const { data } = await clienteAxios.get(url);
 
         // como en etse punto ya sabemos que se confirmo se cambia confirmarCuenta a true y se mustra una alerta
         // con el mensaje de la respuesta satisfactoria del backend
