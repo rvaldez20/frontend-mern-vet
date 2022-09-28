@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 import Alerta from '../components/Alerta';
 
@@ -13,7 +14,7 @@ const Registrar = () => {
 
   const [alerta, setAlerta] = useState({})
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // validación: todos son obligatorios
@@ -36,6 +37,25 @@ const Registrar = () => {
     setAlerta({});
 
     // TODO: Guardar el veterinario
+    try {
+
+      // hacemos la peticion al backend
+      const url = 'http://localhost:4000/api/veterinarios/registro'
+      await axios.post(url, { nombre, email, password })
+      
+      setAlerta({
+        msg: 'Creado Correctamente, revisa tu email',
+        error: false
+      });
+      
+    } catch (error) {
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true
+      });
+      // console.log(error.response.data.msg)
+    }
+
   }
 
   const { msg } = alerta;
