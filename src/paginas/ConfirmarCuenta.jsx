@@ -19,7 +19,7 @@ const ConfirmarCuenta = () => {
     const confirmarCuenta = async () => {
       try {
         // url y se hace la petieción get para confirmar la cuenta
-        const url =`http://localhost:4000/api/veterinarios/confirmar/${token}`;
+        const url =`${import.meta.env.VITE_BACKEND_URL}/api/veterinarios/confirmar/${token}`;
         const { data } = await axios.get(url);
 
         // como en etse punto ya sabemos que se confirmo se cambia confirmarCuenta a true y se mustra una alerta

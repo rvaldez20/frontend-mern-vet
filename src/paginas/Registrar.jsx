@@ -36,11 +36,11 @@ const Registrar = () => {
 
     setAlerta({});
 
-    // TODO: Guardar el veterinario
+    // Se Guardar el veterinario
     try {
 
       // hacemos la peticion al backend
-      const url = 'http://localhost:4000/api/veterinarios/registro'
+      const url = `${import.meta.env.VITE_BACKEND_URL}/api/veterinarios/registro`
       await axios.post(url, { nombre, email, password })
       
       setAlerta({

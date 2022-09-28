@@ -8,6 +8,9 @@ import ConfirmarCuenta from './paginas/ConfirmarCuenta';
 
 function App() {
 
+  // test variables de entorno con entorno de react creado con VITE
+  // console.log(import.meta.env.VITE_BACKEND_URL, 'VITE_BACKEND_URL')
+
   return (
     <BrowserRouter>
       <Routes>
