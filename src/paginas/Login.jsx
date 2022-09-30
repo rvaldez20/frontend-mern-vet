@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 
 const Login = () => {
+
+  const {auth } = useAuth();
+
   return (
     <>      
       <div>

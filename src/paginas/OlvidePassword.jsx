@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 import Alerta from '../components/Alerta';
 import clienteAxios from '../config/axios';
 
-
 const OlvidePassword = () => {
-
   const [email, setEmail] = useState('');
   const [alerta, setAlerta] = useState({})
 
