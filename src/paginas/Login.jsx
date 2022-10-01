@@ -7,11 +7,12 @@ import useAuth from '../hooks/useAuth';
 
 
 const Login = () => {
-  // const {auth } = useAuth();
-
+  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [alerta, setAlerta] = useState({})
+  
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
 
@@ -36,6 +37,9 @@ const Login = () => {
 
       // almacenamos el en localStorage el token(jwt)
       localStorage.setItem('token', data.token);
+
+      // seteamos la data al context
+      setAuth(data)
 
       // loguin success hacem,os redirect a /admin
       navigate('/admin')
