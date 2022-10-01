@@ -4,7 +4,8 @@ import clienteAxios from '../config/axios';
 const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
-
+  
+  const [cargando, setCargando] = useState(true);
   const [auth, setAuth] = useState({});
 
   useEffect(() => {
@@ -13,7 +14,10 @@ const AuthProvider = ({children}) => {
       const token = localStorage.getItem('token');
       // console.log(token)
 
-      if(!token) return
+      if(!token) {
+        setCargando(false);
+        return;
+      }
 
       // ingresamos al perfil pero hay que enviar el berer token
       const config = {
@@ -29,22 +33,31 @@ const AuthProvider = ({children}) => {
 
         // guardamos en context los datos del usuario loguado
         setAuth(data)
-
-        console.log(data)
+        
+        // console.log(data)
       } catch (error) {
         console.log(error.response.data.msg)
         setAuth({})
-      }      
+      } 
+      
+      setCargando(false);
 
     }
     autenticarUsuario();
   }, [])
 
+  const cerrarSesion = () => {
+    localStorage.removeItem('token');
+    setAuth({});
+  }
+
   return(
     <AuthContext.Provider 
       value={{
         auth,
-        setAuth
+        setAuth,
+        cargando,
+        cerrarSesion
       }}
     >
       {children}
