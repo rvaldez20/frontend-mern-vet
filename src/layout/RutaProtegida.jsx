@@ -9,8 +9,8 @@ const RutaProtegida = () => {
 
   // extraemos info del user que hizo login del useAuth (Auth Context)
   const { auth, cargando } = useAuth();
-  console.log(auth, 'auth')
-  console.log(cargando, 'cargando')
+  // console.log(auth, 'auth')
+  // console.log(cargando, 'cargando')
 
   if(cargando) return 'cargando...'
 
