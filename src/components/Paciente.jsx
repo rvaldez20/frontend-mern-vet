@@ -1,16 +1,19 @@
+import usePaciente from '../hooks/usePacientes';
+
 
 const Paciente = ({paciente}) => {
 
+  // desestructuramos la funcion setEdicion de custum hook usePaciente
+  const { setEdicion } = usePaciente();
+
   const { nombre, propietario, email, fecha, sintomas, _id  } = paciente;
 
-  console.log(fecha)
+  // console.log(fecha)
 
   const formatearFecha = (fecha) => {
     const nuevaFecha = new Date(fecha);
     return new Intl.DateTimeFormat('es-MX', {dateStyle: 'long'}).format(nuevaFecha);
-  }
-
-  console.log(fecha)
+  }  
 
   return (
     <div className="mx-5 my-10 bg-white shadow-md px-5 py-10 rounded-xl">
@@ -39,6 +42,7 @@ const Paciente = ({paciente}) => {
         <button
           type="button"
           className="py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-white uppercase rounded-md font-bold"
+          onClick={() => setEdicion(paciente)}
         > Editar</button>
 
 <button
