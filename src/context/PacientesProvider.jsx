@@ -9,6 +9,31 @@ export const PacientesProvider = ({children}) => {
 
   const [pacientes, setPacientes] = useState([])
 
+  useEffect(() => {
+    const obtenerPacientes = async() => {
+      try {
+        const token = localStorage.getItem('token');
+        if(!token) return 
+
+        const configAxios = {
+          headers: {
+            "Content-Type": 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        }
+
+        const { data } = await clienteAxios.get('/pacientes', configAxios)      
+
+        // agregamos al state los pacientes
+        setPacientes(data);
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    obtenerPacientes();
+  }, [])
+
   // función para guardar un paciente
   const guardarPaciente = async (paciente) => {
     // guardamos el paciente
@@ -34,7 +59,7 @@ export const PacientesProvider = ({children}) => {
       setPacientes([pacienteAlmacenado, ...pacientes]);
 
     } catch (error) {
-      console.log(error)
+      console.log(error.response.data.msg)
     }
   }
 
