@@ -8,13 +8,13 @@ const Formulario = () => {
   const [nombre, setNombre] = useState('');
   const [propietario, setPropietario] = useState('')
   const [email, setEmail] = useState('')
-  const [fecha, setFecha] = useState(Date.now())
+  const [fecha, setFecha] = useState('')
   const [sintomas, setSintomas] = useState('')
 
   const [alerta, setAlerta] = useState({})
 
   // extraemos los pacientes de usePacientes
-  const { pacientes } =  usePacientes();
+  const { guardarPaciente } =  usePacientes();
   
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -25,7 +25,11 @@ const Formulario = () => {
       return;
     }
 
+    // si pasa la validacion para ocultar la alerta
     setAlerta({});    
+
+    // se le pasan los campos a la función para guardar un paciente y hacerlo en el pacientesProvider
+    guardarPaciente({ nombre, propietario, email, fecha, sintomas })
   }
 
   const { msg } = alerta;
