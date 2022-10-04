@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import usePacientes from '../hooks/usePacientes';
+import { useState, useEffect } from 'react';
 
+import usePacientes from '../hooks/usePacientes';
 import Alerta from './Alerta';
 
 const Formulario = () => {
@@ -10,11 +10,24 @@ const Formulario = () => {
   const [email, setEmail] = useState('')
   const [fecha, setFecha] = useState('')
   const [sintomas, setSintomas] = useState('')
+  const [id, setId] = useState(null)
 
   const [alerta, setAlerta] = useState({})
 
   // extraemos los pacientes de usePacientes
-  const { guardarPaciente } =  usePacientes();
+  const { guardarPaciente, paciente } =  usePacientes();
+
+  useEffect(() => {
+    if(paciente?.nombre) {
+      setNombre(paciente.nombre)
+      setPropietario(paciente.propietario)
+      setEmail(paciente.email)
+      setFecha(paciente.fecha)
+      setSintomas(paciente.sintomas)
+      setId(paciente._id)
+    }
+  }, [paciente])
+
   
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -29,7 +42,7 @@ const Formulario = () => {
     setAlerta({});    
 
     // se le pasan los campos a la función para guardar un paciente y hacerlo en el pacientesProvider
-    guardarPaciente({ nombre, propietario, email, fecha, sintomas })
+    guardarPaciente({ nombre, propietario, email, fecha, sintomas, id })
   }
 
   const { msg } = alerta;
@@ -122,7 +135,7 @@ const Formulario = () => {
         <input 
           type="submit" 
           className="bg-indigo-600 w-full p-3 text-white rounded-md uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-          value="Agergar Paciente"
+          value={ id ? "Guardar Cambios" : "Agergar Paciente" }
         />
       </form>
 

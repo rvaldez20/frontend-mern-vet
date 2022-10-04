@@ -37,6 +37,15 @@ export const PacientesProvider = ({children}) => {
 
   // función para guardar un paciente
   const guardarPaciente = async (paciente) => {
+
+    if(paciente.id) {
+      console.log('editando....')
+    } else {
+      console.log('Nuevo')
+    }
+
+    return
+
     // guardamos el paciente
     try {
 
@@ -75,6 +84,7 @@ export const PacientesProvider = ({children}) => {
         pacientes,
         guardarPaciente,
         setEdicion,
+        paciente,
       }}
     >
       {children}
