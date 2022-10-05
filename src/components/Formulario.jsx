@@ -15,7 +15,7 @@ const Formulario = () => {
   const [alerta, setAlerta] = useState({})
 
   // extraemos los pacientes de usePacientes
-  const { guardarPaciente, paciente } =  usePacientes();
+  const { guardarPaciente, paciente } =  usePacientes();  
 
   useEffect(() => {
     if(paciente?.nombre) {
@@ -39,10 +39,22 @@ const Formulario = () => {
     }
 
     // si pasa la validacion para ocultar la alerta
-    setAlerta({});    
+    // setAlerta({});    
 
     // se le pasan los campos a la función para guardar un paciente y hacerlo en el pacientesProvider
     guardarPaciente({ nombre, propietario, email, fecha, sintomas, id })
+
+    setAlerta({
+      msg: 'Guardado Correctamente',
+    });
+
+    // limpiamos el form
+    setNombre('');
+    setPropietario('');
+    setEmail('');
+    setFecha('');
+    setSintomas('');
+    setId(null)
   }
 
   const { msg } = alerta;

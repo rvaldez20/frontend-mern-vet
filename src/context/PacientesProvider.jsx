@@ -38,38 +38,44 @@ export const PacientesProvider = ({children}) => {
   // función para guardar un paciente
   const guardarPaciente = async (paciente) => {
 
-    if(paciente.id) {
-      console.log('editando....')
-    } else {
-      console.log('Nuevo')
+    // obtenemos el token de localstorage
+    const token = localStorage.getItem('token')
+    // console.log(token)
+
+    const configAxios = {
+      headers: {
+        "Content-Type": 'application/json',
+        Authorization: `Bearer ${token}`
+      }
     }
 
-    return
+    if(paciente.id) {      
+      // Guardamos la actualización
+      try {        
+        const { data } = await clienteAxios.put(`/pacientes/${paciente.id}`, paciente, configAxios);
+        // console.log(data)
 
-    // guardamos el paciente
-    try {
-
-      const token = localStorage.getItem('token')
-      // console.log(token)
-
-      const configAxios = {
-        headers: {
-          "Content-Type": 'application/json',
-          Authorization: `Bearer ${token}`
-        }
+        const pacientesActualizado = pacientes.map( pacienteState => pacienteState._id === data._id ? data : pacienteState )
+        setPacientes(pacientesActualizado)
+        
+      } catch (error) {
+        console.log(error.response.data.msg)
       }
-
-      const { data } = await clienteAxios.post('/pacientes', paciente, configAxios)
-
-      // seleccionamos los campos que deseamos
-      const { createdAt, updatedAt, __v, ...pacienteAlmacenado } = data;
-      console.log(pacienteAlmacenado)
-
-      // y guardamos el cliente almacenado en el state de pacientes
-      setPacientes([pacienteAlmacenado, ...pacientes]);
-
-    } catch (error) {
-      console.log(error.response.data.msg)
+    } else {      
+      // guardamos el nuevo paciente
+      try {          
+        const { data } = await clienteAxios.post('/pacientes', paciente, configAxios)
+  
+        // seleccionamos los campos que deseamos
+        const { createdAt, updatedAt, __v, ...pacienteAlmacenado } = data;
+        // console.log(pacienteAlmacenado)
+  
+        // y guardamos el cliente almacenado en el state de pacientes
+        setPacientes([...pacientes, pacienteAlmacenado]);
+  
+      } catch (error) {
+        console.log(error.response.data.msg)
+      }
     }
   }
 
