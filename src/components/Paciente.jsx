@@ -4,7 +4,7 @@ import usePaciente from '../hooks/usePacientes';
 const Paciente = ({paciente}) => {
 
   // desestructuramos la funcion setEdicion de custum hook usePaciente
-  const { setEdicion } = usePaciente();
+  const { setEdicion, eliminarPaciente } = usePaciente();
 
   const { nombre, propietario, email, fecha, sintomas, _id  } = paciente;
 
@@ -48,6 +48,7 @@ const Paciente = ({paciente}) => {
 <button
           type="button"
           className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white uppercase rounded-md font-bold"
+          onClick={() => eliminarPaciente(paciente._id)}
         > Eliminar</button>
       </div>
 

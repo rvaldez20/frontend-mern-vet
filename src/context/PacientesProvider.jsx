@@ -11,6 +11,9 @@ export const PacientesProvider = ({children}) => {
   const [paciente, setPaciente] = useState({})
 
   useEffect(() => {
+    /* ========================================================
+     *función para obtener los pacientes del veterinario logueado
+    =========================================================== */
     const obtenerPacientes = async() => {
       try {
         const token = localStorage.getItem('token');
@@ -35,7 +38,11 @@ export const PacientesProvider = ({children}) => {
     obtenerPacientes();
   }, [])
 
-  // función para guardar un paciente
+
+
+  /* ========================================================
+      *función para guardar un paciente nuevo o actualizado
+  =========================================================== */
   const guardarPaciente = async (paciente) => {
 
     // obtenemos el token de localstorage
@@ -80,8 +87,47 @@ export const PacientesProvider = ({children}) => {
   }
 
 
+
+  /* ========================================================
+      *función para setear un paciente a editar
+  =========================================================== */
   const setEdicion = (paciente) => {
     setPaciente(paciente)
+  }
+
+
+  /* ========================================================
+      *función para eliminar un paciente
+  =========================================================== */
+  const eliminarPaciente = async(id) => {
+
+    const confirmar = confirm('¿Estás seguro de eliminar al paciente ??')
+    
+    if(confirmar) {
+        
+      try {
+        // obtenemos el token de localstorage
+        const token = localStorage.getItem('token')
+        // console.log(token)
+
+        const configAxios = {
+          headers: {
+            "Content-Type": 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        }
+        // console.log(id);
+
+        // eliminamos el paciente
+        const { data } = await clienteAxios.delete(`/pacientes/${id}`, configAxios);
+        console.log(data);
+
+        const pacientesUpd = pacientes.filter( pacienteState => pacienteState._id !== id);
+        setPacientes(pacientesUpd);
+      } catch (error) {
+        console.log(error.response.data.msg)
+      } 
+    }
   }
 
   return(
@@ -91,6 +137,7 @@ export const PacientesProvider = ({children}) => {
         guardarPaciente,
         setEdicion,
         paciente,
+        eliminarPaciente,
       }}
     >
       {children}
