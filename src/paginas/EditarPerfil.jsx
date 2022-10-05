@@ -1,7 +1,22 @@
-import AdminNav from "../components/AdminNav"
+import { useState,  useEffect } from 'react';
+import AdminNav from '../components/AdminNav';
+import useAuth from '../hooks/useAuth';
 
 
 const EditarPerfil = () => {
+
+  // obtenemos los datos del usuario del context
+  const { auth } = useAuth();
+  const [perfil, setPerfil] = useState({})  // se crea state para no modificar el del auth
+  
+
+  useEffect(() => {
+    setPerfil(auth);
+   
+  }, [auth])
+  
+  console.log(perfil)
+
   return (
     <>
       <AdminNav />
@@ -20,6 +35,11 @@ const EditarPerfil = () => {
                 type="text" 
                 className="border bg-gray-50 w-full p-2 mt-3 rounded-lg"
                 name="nombre"
+                value={perfil.nombre || ''}
+                onChange={e => setPerfil({
+                  ...perfil,
+                  [e.target.name]: e.target.value
+                })}
               />
             </div>
 
@@ -29,6 +49,11 @@ const EditarPerfil = () => {
                 type="text" 
                 className="border bg-gray-50 w-full p-2 mt-3 rounded-lg"
                 name="web"
+                value={perfil.web || ''}
+                onChange={e => setPerfil({
+                  ...perfil,
+                  [e.target.name]: e.target.value
+                })}
               />
             </div>
 
@@ -38,6 +63,11 @@ const EditarPerfil = () => {
                 type="text" 
                 className="border bg-gray-50 w-full p-2 mt-3 rounded-lg"
                 name="telefono"
+                value={perfil.telefono || ''}
+                onChange={e => setPerfil({
+                  ...perfil,
+                  [e.target.name]: e.target.value
+                })}
               />
             </div>
 
@@ -47,6 +77,11 @@ const EditarPerfil = () => {
                 type="text" 
                 className="border bg-gray-50 w-full p-2 mt-3 rounded-lg"
                 name="email"
+                value={perfil.email || ''}
+                onChange={e => setPerfil({
+                  ...perfil,
+                  [e.target.name]: e.target.value
+                })}
               />
             </div>
 
