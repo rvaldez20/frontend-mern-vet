@@ -1,13 +1,15 @@
 import { useState,  useEffect } from 'react';
 import AdminNav from '../components/AdminNav';
 import useAuth from '../hooks/useAuth';
+import Alerta from '../components/Alerta';
 
 
 const EditarPerfil = () => {
 
   // obtenemos los datos del usuario del context
-  const { auth } = useAuth();
+  const { auth,actualizarPerfil } = useAuth();
   const [perfil, setPerfil] = useState({})  // se crea state para no modificar el del auth
+  const [alerta, setAlerta] = useState({})
   
 
   useEffect(() => {
@@ -15,7 +17,30 @@ const EditarPerfil = () => {
    
   }, [auth])
   
-  console.log(perfil)
+  // console.log(perfil)
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    const {nombre, email} = perfil;
+
+    if([nombre, email].includes('')) {
+      setAlerta({
+        msg: 'Nombre y Email son obligatorios', 
+        error: true});
+      return;
+    }
+
+    // cuado pas ala validación y desaparecer la alerta
+    setAlerta({});
+
+    // actualizamos (gauradmos) el perfil
+    actualizarPerfil(perfil);
+  }
+
+  // seteamos la alerta
+  const { msg } = alerta;
+
+  
 
   return (
     <>
@@ -28,7 +53,16 @@ const EditarPerfil = () => {
 
       <div className="flex justify-center">
         <div className="w-full md:w-1/2 bg-white shadow rounded-lg p-5">
-          <form>
+
+          { 
+            msg && <Alerta 
+                      alerta={alerta}
+                    />
+          }    
+
+          <form
+            onSubmit={handleSubmit}
+          >
             <div className="my-3">
               <label className="uppercase font-bold text-gray-600">Nombre</label>
               <input 
