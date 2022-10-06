@@ -83,8 +83,36 @@ const AuthProvider = ({children}) => {
         msg: error.response.data.msg,
         error: true
       }
+    }    
+  }
+
+
+  const guardarPassword = async(datos) => {
+    const token = localStorage.getItem('token');
+    // console.log(token)
+
+    if(!token) {
+      setCargando(false);
+      return;
     }
-    
+
+    const configAxios = {
+      headers: {
+        "content-type": 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    try {
+
+      const url = '/veterinarios/actualizar-password'
+
+      const { data } = clienteAxios.put(url, datos, configAxios);
+      console.log(data);
+      
+    } catch (error) {
+      console.log(error.response.data.msg)
+    }
   }
 
   return(
@@ -95,6 +123,7 @@ const AuthProvider = ({children}) => {
         cargando,
         cerrarSesion,
         actualizarPerfil,
+        guardarPassword,
       }}
     >
       {children}

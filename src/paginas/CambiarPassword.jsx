@@ -7,13 +7,40 @@ import Alerta from '../components/Alerta';
 
 const CambiarPassword = () => {
 
-  const { auth,actualizarPerfil } = useAuth();
-  const [perfil] = useState({})  // se crea state para no modificar el del auth
+  const { guardarPassword } = useAuth();
+ 
+  const [password, setPassword] = useState({
+    pwd_actual: '', 
+    pwd_nuevo: '',
+  })
   const [alerta, setAlerta] = useState({})
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // console.log(Object.keys(password))   // retorna array con los key    ['pwd_actual', 'pwd_nuevo']
+    // console.log(Object.values(password).some( campo => campo === '')) // retorna array con los values ['actual', 'nuevo']
+
+    // validaciones: 1. verificar que se incluyan los 2 passwords el actual y nuevo
+    if(Object.values(password).some( campo => campo === '')) {
+      setAlerta({
+        msg: 'El password Actual y Password Nuevo son obligatorios', 
+        error: true});
+      return;
+    } 
+
+    // validación 2: 
+    if(password.pwd_nuevo.length < 6) {
+      setAlerta({
+        msg: 'Nuevo Password debe ser de al menos 6 caracteres', 
+        error: true});
+      return;
+    }
+
+    // gauradmos el nuevo password
+    guardarPassword(password);
+    
   }
 
   // seteamos la alerta
@@ -43,10 +70,14 @@ const CambiarPassword = () => {
             <div className="my-3">
               <label className="uppercase font-bold text-gray-600">Password Actual</label>
               <input 
-                type="text" 
+                type="password" 
                 className="border bg-gray-50 w-full p-2 mt-3 rounded-lg"
-                name="password"
+                name="pwd_actual"
                 placeholder="Escribe tu Password actual"
+                onChange={e => setPassword({
+                  ...password,
+                  [e.target.name]: e.target.value
+                })}
               />
             </div>
 
@@ -54,10 +85,14 @@ const CambiarPassword = () => {
             <div className="my-3">
               <label className="uppercase font-bold text-gray-600">Password Nuevo</label>
               <input 
-                type="text" 
+                type="password" 
                 className="border bg-gray-50 w-full p-2 mt-3 rounded-lg"
-                name="nuevoPassword"
+                name="pwd_nuevo"
                 placeholder="Escribe tu nuevo Password"
+                onChange={e => setPassword({
+                  ...password,
+                  [e.target.name]: e.target.value
+                })}
               />
             </div>
 

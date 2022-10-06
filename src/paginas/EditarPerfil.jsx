@@ -72,7 +72,7 @@ const EditarPerfil = () => {
                 className="border bg-gray-50 w-full p-2 mt-3 rounded-lg"
                 name="nombre"
                 value={perfil.nombre || ''}
-                onChange={e => setPerfil({
+                onChange={e => setPassword({
                   ...perfil,
                   [e.target.name]: e.target.value
                 })}
