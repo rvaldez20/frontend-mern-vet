@@ -107,11 +107,18 @@ const AuthProvider = ({children}) => {
 
       const url = '/veterinarios/actualizar-password'
 
-      const { data } = clienteAxios.put(url, datos, configAxios);
+      const { data } = await clienteAxios.put(url, datos, configAxios);
       console.log(data);
+
+      return {
+        msg: data.msg
+      }
       
     } catch (error) {
-      console.log(error.response.data.msg)
+      return {
+        msg: error.response.data.msg,
+        error: true
+      }
     }
   }
 

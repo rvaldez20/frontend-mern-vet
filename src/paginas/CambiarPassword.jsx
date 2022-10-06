@@ -16,7 +16,7 @@ const CambiarPassword = () => {
   const [alerta, setAlerta] = useState({})
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // console.log(Object.keys(password))   // retorna array con los key    ['pwd_actual', 'pwd_nuevo']
@@ -39,7 +39,9 @@ const CambiarPassword = () => {
     }
 
     // gauradmos el nuevo password
-    guardarPassword(password);
+    const respuesta = await guardarPassword(password);
+
+    setAlerta(respuesta);    
     
   }
 
