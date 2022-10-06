@@ -33,7 +33,7 @@ const Login = () => {
       // hacemos la peticion al backend
       const url = `/veterinarios/login`
       const { data } = await clienteAxios.post(url, { email, password })
-      console.log(data)
+      // console.log(data)
 
       // almacenamos el en localStorage el token(jwt)
       localStorage.setItem('token', data.token);
